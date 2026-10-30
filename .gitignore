@@ -1,0 +1,5 @@
+node_modules
+.wrangler
+lux3d/tasks.json
+lux3d/raw
+lux3d/gen.log
