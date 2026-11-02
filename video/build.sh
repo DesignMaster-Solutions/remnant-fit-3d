@@ -17,7 +17,7 @@ s = s.replace("https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js"
 s = s.replace("https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/", "./lib/three/examples/jsm/")
 seed = """<script>window.__FILM = true;
 (() => { let a = 20261102; Math.random = () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; })();</script>
-<style>html,body{width:1920px;height:1080px}</style>
+<style>html{zoom:1.5}html,body{width:1280px;height:720px}</style>
 </head>"""
 s = s.replace("</head>", seed, 1)
 s = s.replace("<body>", f'<body>\n<div id="root" data-composition-id="remnant" data-start="0" data-duration="{sys.argv[1]}" data-width="1920" data-height="1080">', 1)

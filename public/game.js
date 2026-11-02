@@ -11,7 +11,7 @@ import * as ui from './ui.js';
 const canvas = document.createElement('canvas');
 document.body.prepend(canvas);
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, preserveDrawingBuffer: !!window.__FILM });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setPixelRatio(window.__FILM ? 1.5 : Math.min(devicePixelRatio, 2));
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.shadowMap.enabled = true;
 const scene = new THREE.Scene();
@@ -336,7 +336,7 @@ addEventListener('resize', () => {
 // square so it can turn without touching its neighbour. Returns the box the yard covers.
 function layRack() {
   const wide = innerWidth / innerHeight > 1.3;
-  const maxRow = wide ? Math.max(2.4, target.h * CELL) : Math.max(3.6, target.w * CELL);
+  const maxRow = wide ? Math.max(3.2, target.w * CELL) : Math.max(3.6, target.w * CELL);
   const left = wide ? origin.x + target.w * CELL + 0.5 : 0;
   let x = 0, z = wide ? origin.z : origin.z + target.h * CELL + 0.6, row = 0, rowDepth = 0;
   const rows = [[]];
