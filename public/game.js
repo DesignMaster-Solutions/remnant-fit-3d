@@ -290,26 +290,26 @@ controls.maxPolarAngle = 1.35;
 controls.minDistance = 3;
 controls.maxDistance = 26;
 
-let sceneFront = 5, shake = 0;
+let yard = { x0: -1.8, x1: 1.8, z1: 5 }, shake = 0;
 // Fits the counter and the yard between the header and the footer: steeper camera on a tall screen,
 // distance found by bisection on the projected corners, then a view offset centres the band.
 function frame(front) {
-  if (typeof front === 'number') sceneFront = front;
+  if (front && typeof front === 'object') yard = front;
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.clearViewOffset();
   camera.updateProjectionMatrix();
   const top = document.querySelector('header').offsetHeight, bottom = document.querySelector('footer').offsetHeight;
-  const halfW = Math.max(target.w * CELL, 3.6) / 2 + 0.2;
-  const z0 = origin.z - 0.1, z1 = sceneFront + 0.1;
+  const xa = Math.min(origin.x, yard.x0) - 0.2, xb = Math.max(origin.x + target.w * CELL, yard.x1) + 0.2;
+  const z0 = origin.z - 0.1, z1 = Math.max(yard.z1, origin.z + target.h * CELL) + 0.1;
   const corners = [];
-  for (const x of [-halfW, halfW]) for (const z of [z0, z1]) for (const y of [0, TOP]) corners.push(new THREE.Vector3(x, y, z));
+  for (const x of [xa, xb]) for (const z of [z0, z1]) for (const y of [0, TOP]) corners.push(new THREE.Vector3(x, y, z));
   const tilt = camera.aspect < 0.8 ? 0.22 : 0.42; // how far the camera leans back from straight down
-  const mid = new THREE.Vector3(0, 0.3, (z0 + z1) / 2);
+  const mid = new THREE.Vector3((xa + xb) / 2, 0.3, (z0 + z1) / 2);
   const band = 2 * (1 - (top + bottom) / h) * 0.94;
   const extent = (dist) => {
-    camera.position.set(0, mid.y + dist * Math.cos(tilt), mid.z + dist * Math.sin(tilt));
+    camera.position.set(mid.x, mid.y + dist * Math.cos(tilt), mid.z + dist * Math.sin(tilt));
     camera.lookAt(mid);
     camera.updateMatrixWorld();
     let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
@@ -325,12 +325,20 @@ function frame(front) {
   controls.target.copy(mid);
   controls.update();
 }
-addEventListener('resize', () => target && frame());
+addEventListener('resize', () => {
+  if (!target) return;
+  const box = layRack();
+  pieces.forEach((p) => { if (!p.placed && p !== dragging) rack(p, false); });
+  frame(box);
+});
 
-// Rows in front of the kitchen; each slab gets a square so it can turn without touching its neighbour.
+// The yard: beside the kitchen on a wide screen, in rows in front of it on a tall one. Each slab gets a
+// square so it can turn without touching its neighbour. Returns the box the yard covers.
 function layRack() {
-  const maxRow = Math.max(3.6, target.w * CELL);
-  let x = 0, z = origin.z + target.h * CELL + 0.6, row = 0, rowDepth = 0;
+  const wide = innerWidth / innerHeight > 1.3;
+  const maxRow = wide ? Math.max(2.4, target.h * CELL) : Math.max(3.6, target.w * CELL);
+  const left = wide ? origin.x + target.w * CELL + 0.5 : 0;
+  let x = 0, z = wide ? origin.z : origin.z + target.h * CELL + 0.6, row = 0, rowDepth = 0;
   const rows = [[]];
   for (const p of pieces) {
     const side = Math.max(p.mask.w, p.mask.h) * CELL + 0.1;
@@ -341,11 +349,13 @@ function layRack() {
     x += side;
     rowDepth = Math.max(rowDepth, side);
   }
+  let x1 = 0;
   for (const r of rows) {
     const end = r.at(-1).home.x + r.at(-1).side / 2;
-    r.forEach((p) => { p.home.x -= end / 2; });
+    r.forEach((p) => { p.home.x += wide ? left : -end / 2; });
+    x1 = Math.max(x1, end);
   }
-  return z + rowDepth;
+  return wide ? { x0: left, x1: left + x1, z1: z + rowDepth } : { x0: -x1 / 2, x1: x1 / 2, z1: z + rowDepth };
 }
 
 let last = performance.now();
@@ -373,7 +383,16 @@ function tick(dt) {
 
 // Test and film hooks: screen position of a slab or of a counter cell; a clock the recorder can drive.
 window.__at = (id, cx, cy) => {
-  const v = id ? pieces.find((q) => q.id === id).group.position.clone() : new THREE.Vector3(origin.x + cx * CELL, TOP, origin.z + cy * CELL);
+  let v;
+  if (id) {
+    const p = pieces.find((q) => q.id === id), m = rotated(p.mask, p.turns);
+    let best = null; // the filled cell nearest the middle: the middle of an L is empty
+    for (let y = 0; y < m.h; y++) for (let x = 0; x < m.w; x++) {
+      const d = (x + 0.5 - m.w / 2) ** 2 + (y + 0.5 - m.h / 2) ** 2;
+      if (m.cells[y * m.w + x] && (!best || d < best.d)) best = { d, x, y };
+    }
+    v = p.group.position.clone().add(new THREE.Vector3((best.x + 0.5 - m.w / 2) * CELL, p.thick / 2, (best.y + 0.5 - m.h / 2) * CELL));
+  } else v = new THREE.Vector3(origin.x + cx * CELL, TOP, origin.z + cy * CELL);
   v.project(camera);
   const r = canvas.getBoundingClientRect();
   return [r.left + ((v.x + 1) / 2) * r.width, r.top + ((1 - v.y) / 2) * r.height];
