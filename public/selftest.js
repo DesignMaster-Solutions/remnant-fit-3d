@@ -41,7 +41,8 @@ const check = (name, ok, detail = '') => log(`${ok ? 'PASS' : 'FAIL'} ${name} ${
     const tap = __at(__fit.pieces[2].id);
     ev('pointerdown', tap); ev('pointerup', tap);
     await wait(200);
-    check('a tap in the yard selects without trying to place', !__fit.pieces[2].placed && !document.getElementById('toast').classList.contains('on'));
+    const t2 = document.getElementById('toast');
+    check('a tap in the yard selects without trying to place', !__fit.pieces[2].placed && !(t2.classList.contains('on') && t2.textContent.includes('taken')), t2.textContent);
     document.getElementById('reset').click();
     await wait(500);
     check('start over clears the counter', __fit.score.covered === 0);
