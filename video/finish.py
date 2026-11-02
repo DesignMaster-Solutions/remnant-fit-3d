@@ -68,8 +68,8 @@ open(f"{OUT}/captions.ass", "w").write("\n".join(ass) + "\n")
 
 song = pick_song(glob.glob("/Library/Audio/Apple Loops/Apple/07 Chillwave/*.caf"), "remnant-fit-3d")
 cmd = [FF, "-v", "error", "-y", "-i", f"{OUT}/gameplay.mp4"]
-for s in slides:
-    cmd += ["-loop", "1", "-t", str(SLIDE), "-i", s]
+for s in slides:  # one frame in; zoompan makes the SLIDE seconds
+    cmd += ["-i", s]
 cmd += ["-loop", "1", "-t", str(CARD), "-i", f"{OUT}/card.png", "-i", f"{OUT}/sfx.wav"]
 for f in song:
     cmd += ["-stream_loop", "-1", "-i", f]
