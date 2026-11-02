@@ -1,4 +1,4 @@
-# Renders each raw Lux3D GLB to report/img/<name>.png (run: blender -b -P report/render.py).
+# Renders each raw Lux3D GLB to public/report/<name>.png (convert to jpg after) (run: blender -b -P report/render.py).
 import bpy, math, os, mathutils
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.makedirs(f"{root}/public/report", exist_ok=True)

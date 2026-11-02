@@ -1,5 +1,6 @@
 // Every sound is synthesised here (no audio files): stone knocks, a saw, a chime. Starts on the first tap.
-let ctx, master;
+let ctx, master, base = null, offline = false;
+const T = () => base ?? ctx.currentTime;
 const on = () => {
   if (!ctx) {
     ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -7,14 +8,17 @@ const on = () => {
     master.gain.value = 0.7;
     master.connect(ctx.destination);
   }
-  if (ctx.state === 'suspended') ctx.resume();
+  if (!offline && ctx.state === 'suspended') ctx.resume();
   return ctx;
 };
 export const unlock = on;
+// Offline use (the film soundtrack): play into a given context, each sound at the time set by `at`.
+export function renderInto(context) { ctx = context; offline = true; master = ctx.createGain(); master.gain.value = 0.7; master.connect(ctx.destination); }
+export const at = (seconds) => { base = seconds; };
 export const setMuted = (m) => { on(); master.gain.value = m ? 0 : 0.7; };
 const listeners = [];
 export const onSound = (fn) => listeners.push(fn); // the film recorder listens here
-const emit = (name) => listeners.forEach((fn) => fn(name));
+const emit = (name, arg) => listeners.forEach((fn) => fn(name, arg));
 
 function noise(seconds) {
   const b = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * seconds), ctx.sampleRate);
@@ -36,8 +40,8 @@ function env(node, t, peak, decay) {
 
 // Stone on stone: a low body thump plus a short bright click. `weight` 0..1 deepens it for big slabs.
 export function knock(weight = 0.5) {
-  on(); emit('knock');
-  const t = ctx.currentTime;
+  on(); emit('knock', weight);
+  const t = T();
   const o = ctx.createOscillator();
   o.frequency.setValueAtTime(140 - weight * 60, t);
   o.frequency.exponentialRampToValueAtTime(45, t + 0.18);
@@ -51,7 +55,7 @@ export function knock(weight = 0.5) {
 
 export function lift() {
   on(); emit('lift');
-  const t = ctx.currentTime;
+  const t = T();
   const n = noise(0.12), f = ctx.createBiquadFilter();
   f.type = 'highpass'; f.frequency.value = 3000;
   env(n.connect(f), t, 0.12, 0.1);
@@ -60,8 +64,8 @@ export function lift() {
 
 // Wet-saw whine, length grows with how much stone gets cut off.
 export function saw(amount = 0.3) {
-  on(); emit('saw');
-  const t = ctx.currentTime, len = 0.15 + Math.min(0.6, amount);
+  on(); emit('saw', amount);
+  const t = T(), len = 0.15 + Math.min(0.6, amount);
   const o = ctx.createOscillator();
   o.type = 'sawtooth';
   o.frequency.setValueAtTime(820, t);
@@ -79,7 +83,7 @@ export function saw(amount = 0.3) {
 
 export function bump() {
   on(); emit('bump');
-  const t = ctx.currentTime;
+  const t = T();
   const o = ctx.createOscillator();
   o.type = 'square';
   o.frequency.setValueAtTime(180, t);
@@ -90,10 +94,10 @@ export function bump() {
 
 // Rising notes, one per star (0 stars still gets a single soft note).
 export function chime(starsWon = 3) {
-  on(); emit('chime');
+  on(); emit('chime', starsWon);
   const notes = [523.25, 659.25, 783.99, 1046.5].slice(0, Math.max(1, starsWon + 1));
   notes.forEach((hz, i) => {
-    const t = ctx.currentTime + i * 0.14;
+    const t = T() + i * 0.14;
     const o = ctx.createOscillator();
     o.type = 'triangle';
     o.frequency.value = hz;

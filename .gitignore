@@ -1,3 +1,5 @@
 node_modules
 .wrangler
 lux3d/raw
+video/film
+video/out

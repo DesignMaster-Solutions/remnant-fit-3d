@@ -166,7 +166,7 @@ function refresh() {
   paintTiles();
   window.__fit = {
     level: levelIndex, bar, target: [target.w, target.h, target.cells.reduce((a, b) => a + b, 0)],
-    pieces: pieces.map(({ id, x, y, turns, placed: on }) => ({ id, x, y, turns, placed: on })), score: s,
+    pieces: pieces.map((p) => ({ id: p.id, x: p.x, y: p.y, turns: p.turns, placed: p.placed, dims: dims(p) })), score: s,
   };
 }
 
@@ -196,6 +196,7 @@ canvas.addEventListener('pointerdown', (e) => {
   lastTap = { id: p.id, at: now };
   selected = dragging = p;
   dragging.lift = 0.18;
+  dragging.moved = false;
   controls.enabled = false;
   sfx.lift();
   try { canvas.setPointerCapture(e.pointerId); } catch { /* synthetic pointers in tests have no capture */ }
@@ -203,6 +204,7 @@ canvas.addEventListener('pointerdown', (e) => {
 });
 canvas.addEventListener('pointermove', (e) => {
   if (!dragging) return;
+  dragging.moved = true;
   pick(e);
   const plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -TOP - 0.03);
   const at = ray.ray.intersectPlane(plane, new THREE.Vector3());
@@ -218,6 +220,7 @@ canvas.addEventListener('pointercancel', () => { if (dragging) drop(dragging); }
 function drop(p) {
   dragging = null;
   controls.enabled = true;
+  if (!p.moved) { refresh(); return; } // a tap only selects
   const [w, h] = dims(p);
   const near = p.x + w > 0 && p.y + h > 0 && p.x < target.w && p.y < target.h;
   const before = score(target, pieces.filter((q) => q.placed && q !== p));
@@ -288,18 +291,38 @@ controls.minDistance = 3;
 controls.maxDistance = 26;
 
 let sceneFront = 5, shake = 0;
+// Fits the counter and the yard between the header and the footer: steeper camera on a tall screen,
+// distance found by bisection on the projected corners, then a view offset centres the band.
 function frame(front) {
   if (typeof front === 'number') sceneFront = front;
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
+  camera.clearViewOffset();
   camera.updateProjectionMatrix();
-  const width = Math.max(target.w * CELL, 3.6) + 0.6;
-  const mid = (origin.z + sceneFront) / 2;
-  const span = Math.max(width / Math.min(1.4, camera.aspect), sceneFront - origin.z);
-  const dist = span * 1.75;
-  controls.target.set(0, 0.3, mid);
-  camera.position.set(0, dist * 0.95, mid + dist * 0.35);
+  const top = document.querySelector('header').offsetHeight, bottom = document.querySelector('footer').offsetHeight;
+  const halfW = Math.max(target.w * CELL, 3.6) / 2 + 0.2;
+  const z0 = origin.z - 0.1, z1 = sceneFront + 0.1;
+  const corners = [];
+  for (const x of [-halfW, halfW]) for (const z of [z0, z1]) for (const y of [0, TOP]) corners.push(new THREE.Vector3(x, y, z));
+  const tilt = camera.aspect < 0.8 ? 0.22 : 0.42; // how far the camera leans back from straight down
+  const mid = new THREE.Vector3(0, 0.3, (z0 + z1) / 2);
+  const band = 2 * (1 - (top + bottom) / h) * 0.94;
+  const extent = (dist) => {
+    camera.position.set(0, mid.y + dist * Math.cos(tilt), mid.z + dist * Math.sin(tilt));
+    camera.lookAt(mid);
+    camera.updateMatrixWorld();
+    let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+    for (const c of corners) { const v = c.clone().project(camera); x0 = Math.min(x0, v.x); x1 = Math.max(x1, v.x); y0 = Math.min(y0, v.y); y1 = Math.max(y1, v.y); }
+    return { x0, x1, y0, y1, fits: x1 - x0 < 1.9 && y1 - y0 < band };
+  };
+  let lo = 1, hi = 60;
+  for (let i = 0; i < 30; i++) { const m = (lo + hi) / 2; if (extent(m).fits) hi = m; else lo = m; }
+  const e = extent(hi);
+  // Shift the picture so the scene's middle sits in the middle of the free band.
+  const want = ((bottom - top) / h);
+  camera.setViewOffset(w, h, 0, ((want - (e.y0 + e.y1) / 2) * h) / 2, w, h);
+  controls.target.copy(mid);
   controls.update();
 }
 addEventListener('resize', () => target && frame());
@@ -359,7 +382,10 @@ window.__level = (i) => loadLevel(i);
 window.__plan = () => foreman(target, pieces);
 window.__clock = { pump: (ms) => tick(ms), canvas };
 
-ui.intro(state, () => loadLevel(state.next ?? 0)).catch((e) => ui.fail(e));
+const direct = +new URLSearchParams(location.search).get('job');
+if (direct >= 1 && direct <= LEVELS.length) loadLevel(direct - 1).catch((e) => ui.fail(e)); // link straight to a job
+else ui.intro(state, () => loadLevel(0)).catch((e) => ui.fail(e));
+if (location.search.includes('selftest')) import('./selftest.js');
 if (!window.__FILM) {
   renderer.setAnimationLoop(() => { const t = performance.now(); tick(Math.min(50, t - last)); last = t; });
 }
