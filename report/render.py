@@ -2,7 +2,9 @@
 import bpy, math, os, mathutils
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.makedirs(f"{root}/public/report", exist_ok=True)
-for name in ["remnant-a", "remnant-b", "remnant-c", "kitchen"]:
+import sys
+names = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [f[:-4] for f in sorted(os.listdir(f"{root}/lux3d/raw"))]
+for name in names:
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.import_scene.gltf(filepath=f"{root}/lux3d/raw/{name}.glb")
     objs = [o for o in bpy.context.scene.objects if o.type == "MESH"]

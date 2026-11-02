@@ -1,0 +1,155 @@
+{
+ "remnant-a": {
+  "id": 4502786,
+  "status": 3
+ },
+ "remnant-b": {
+  "id": 4502793,
+  "status": 3
+ },
+ "remnant-c": {
+  "id": 4502801,
+  "status": 3
+ },
+ "kitchen": {
+  "id": 4502808,
+  "status": 3
+ },
+ "kitchen-run": {
+  "id": 4591991,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Single straight run of kitchen base cabinets in matte navy blue with long steel bar handles, about two and a half metres long, cabinets only with a bare flat plywood top and no countertop, single object, photorealistic",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/460046906eff4575af8bf3fba7f802d8/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638066%3B1793645266%26q-key-time%3D1793638066%3B1793645266%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D38610bde15bbc6d179dd0ff426f4bcb78257af5c"
+ },
+ "kitchen-galley": {
+  "id": 4591998,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Galley kitchen with two separate parallel straight runs of kitchen base cabinets in warm oak veneer, an open walkway between the two runs, sink cut-out in one run, cabinets only with a bare flat plywood top and no countertop, single object, photorealistic",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/24fa745dcdc84b61862b9e0a0a7a1e32/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793637996%3B1793645196%26q-key-time%3D1793637996%3B1793645196%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Dba8f394a364d8f159ef65d2f641c60b11fb84457"
+ },
+ "kitchen-u": {
+  "id": 4592004,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "U-shaped kitchen base cabinets in glossy white lacquer with black handles, sink cut-out in the middle run, cabinets only with a bare flat plywood top and no countertop, single object, photorealistic",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/edc71db62bcb4914b68fd7ed6e90bcd5/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638034%3B1793645234%26q-key-time%3D1793638034%3B1793645234%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Dbe7630cb36864e3fab404d5dee6edc25c8b6e9ba"
+ },
+ "kitchen-island": {
+  "id": 4592013,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Freestanding rectangular kitchen island of kitchen base cabinets in charcoal grey with brass knobs, large rectangular cooktop cut-out in the top, cabinets only with a bare flat plywood top and no countertop, single object, photorealistic",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/8b161f8885bc413698afbf6f0f51c4b2/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638071%3B1793645271%26q-key-time%3D1793638071%3B1793645271%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D63e4410fb2f0a57c5785a7427c5030b8648bf4a6"
+ },
+ "kitchen-u-ref": {
+  "id": 4592024,
+  "status": 3,
+  "kind": "multimodal-to-image",
+  "body": {
+   "prompt": "Three-quarter top view product photo of U-shaped kitchen base cabinets in glossy white lacquer, bare flat plywood top with no countertop, rectangular sink cut-out in the middle run, isolated on plain light grey background"
+  },
+  "url": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/0bb/eb3/0d63630c4280f73aabc0f6524df8e6bdce602f8.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793637769%3B1793644969%26q-key-time%3D1793637769%3B1793644969%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Dcd1c2daa51647e2e42cb9e8a681b967399b4d641"
+ },
+ "kitchen-u-img": {
+  "id": 4592044,
+  "status": 3,
+  "kind": "img-to-3d",
+  "body": {
+   "version": "G1",
+   "faceCount": 30000,
+   "img": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/0bb/eb3/0d63630c4280f73aabc0f6524df8e6bdce602f8.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793637769%3B1793644969%26q-key-time%3D1793637769%3B1793644969%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Dcd1c2daa51647e2e42cb9e8a681b967399b4d641"
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/26cd28fa09bf493fbd5cdd0dbb517cfd/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638108%3B1793645308%26q-key-time%3D1793638108%3B1793645308%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Da5d6bfc51823e1e3953949501b12b784d6c405ad"
+ },
+ "remnant-d": {
+  "id": 4592094,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Single flat broken-off offcut of polished green Verde quartzite with white streaks countertop stone, 3 cm thick, irregular pentagon outline, rough sawn edges, seen whole, plain background, photorealistic product shot",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/bdc5604731934e9ba1c5973698cdd861/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638446%3B1793645646%26q-key-time%3D1793638446%3B1793645646%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D2a80a33e7922a3d7cf7557401615e3514fd39ad6"
+ },
+ "swatch-azul": {
+  "id": 4592104,
+  "status": 3,
+  "kind": "multimodal-to-image",
+  "body": {
+   "prompt": "Flat top-down close-up photo of a polished Azul Bahia blue granite slab surface, even light, fills the frame, no objects"
+  },
+  "url": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/218/866/4af78e7d1277262a15b0cfe8061ce3b50514ad67.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793638084%3B1793645284%26q-key-time%3D1793638084%3B1793645284%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D0f97d9297460ab54bf4a193728050126f93711d7"
+ },
+ "remnant-e": {
+  "id": 4592155,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Single flat broken-off offcut of polished grey terrazzo with white and black chips countertop stone, 3 cm thick, long straight strip with one rectangular notch cut out of a long side, rough sawn edges, seen whole, plain background, photorealistic product shot",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/11f3ea0398b44697aa3fb1b247d29100/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638451%3B1793645651%26q-key-time%3D1793638451%3B1793645651%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D27192aac527d71094b9cdfd498d35b8c45e29f60"
+ },
+ "remnant-f": {
+  "id": 4592160,
+  "status": 3,
+  "kind": "text-to-3d",
+  "body": {
+   "prompt": "Single flat broken-off offcut of polished brown Emperador marble with cream veins countertop stone, 3 cm thick, right-angled triangle outline with a chipped tip, rough sawn edges, seen whole, plain background, photorealistic product shot",
+   "version": "G1",
+   "faceCount": 30000
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/aabe89f8d7754ee2b46940f571e1735a/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638456%3B1793645656%26q-key-time%3D1793638456%3B1793645656%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D785a0fe23782e41228764122210dac28c44d193c"
+ },
+ "remnant-azul": {
+  "id": 4592170,
+  "status": 3,
+  "kind": "material-transfer",
+  "body": {
+   "meshUrl": "https://qhsmodel.kujiale.com/lux3dPbrEmbedResult/9a782f2db14d4674a406f5070aace62e/textured.glb",
+   "version": "v3.0-standard",
+   "img": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/218/866/4af78e7d1277262a15b0cfe8061ce3b50514ad67.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793638084%3B1793645284%26q-key-time%3D1793638084%3B1793645284%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D0f97d9297460ab54bf4a193728050126f93711d7"
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/cd475cdbe02546ada97dfe19012edf0b/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638461%3B1793645661%26q-key-time%3D1793638461%3B1793645661%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D44e91d6e1871134ce2d3ed8610f3717323921137"
+ },
+ "swatch-rosa": {
+  "id": 4592200,
+  "status": 3,
+  "kind": "multimodal-to-image",
+  "body": {
+   "prompt": "Flat top-down close-up photo of a polished Rosa Portogallo pink granite slab surface, even light, fills the frame, no objects"
+  },
+  "url": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/90f/3a7/8a4c95c46337619121f001b24b3fb3af9910855d.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793638169%3B1793645369%26q-key-time%3D1793638169%3B1793645369%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D8e0a199c5b24c4459d2b57458bb2f5af48ee610c"
+ },
+ "remnant-rosa": {
+  "id": 4592219,
+  "status": 3,
+  "kind": "material-transfer",
+  "body": {
+   "meshUrl": "https://qhsmodel.kujiale.com/lux3dPbrEmbedResult/9a782f2db14d4674a406f5070aace62e/textured.glb",
+   "version": "v3.0-standard",
+   "img": "https://qhmtl-1258830046.cos.ap-shanghai.myqcloud.com/materialtexture/90f/3a7/8a4c95c46337619121f001b24b3fb3af9910855d.jpg?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKID0nnZ6NL1A1a8YhRvYx8JemdEeKn0RIQH%26q-sign-time%3D1793638169%3B1793645369%26q-key-time%3D1793638169%3B1793645369%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3D8e0a199c5b24c4459d2b57458bb2f5af48ee610c"
+  },
+  "url": "https://tx-qhsmodel-1258830046.cos.ap-shanghai.myqcloud.com/lux3dPbrEmbedResult/1103049f39d24abbad3cc75fbcf94f33/textured.glb?sign=q-sign-algorithm%3Dsha1%26q-ak%3DAKIDf9NK1RaS9akeIfla8PP8alfIdiY9V7Ua%26q-sign-time%3D1793638484%3B1793645684%26q-key-time%3D1793638484%3B1793645684%26q-header-list%3D%26q-url-param-list%3D%26q-signature%3Debc237e3980734b0812aa66bc254c956f283c9be"
+ }
+}
